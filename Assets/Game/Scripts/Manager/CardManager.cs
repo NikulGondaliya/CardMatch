@@ -8,7 +8,7 @@ public class CardManager : MonoBehaviour
 
 
 
-    public List<CardDetail> OpenCard;
+    public Card OpenCard;
 
     public List<Card> cards;
     public List<CardDetail> SelectedCards;
@@ -17,6 +17,38 @@ public class CardManager : MonoBehaviour
     {
         Gamemanager.instance.cardManager = this;
     }
+
+
+    public void CompareCard(Card card)
+    {
+        if (OpenCard == null)
+        {
+            OpenCard = card;
+            return;
+        }
+
+        if (OpenCard.cardDetail == card.cardDetail)
+        {
+            OpenCard.RemoveThisCard();
+            card.RemoveThisCard();
+        }
+        else
+        {
+            OpenCard.CloseCard();
+            card.CloseCard();
+            OpenCard = null;
+        }
+    }
+
+
+
+
+
+
+
+
+
+
 
     public void SetCardData()
     {
