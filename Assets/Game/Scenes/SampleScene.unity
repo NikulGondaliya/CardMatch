@@ -365,6 +365,7 @@ GameObject:
   m_Component:
   - component: {fileID: 650349953}
   - component: {fileID: 650349954}
+  - component: {fileID: 650349955}
   m_Layer: 0
   m_Name: GameManger
   m_TagString: Untagged
@@ -403,6 +404,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   gridManager: {fileID: 0}
   cardManager: {fileID: 0}
+  saveGame: {fileID: 650349955}
+--- !u!114 &650349955
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650349952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dd3238f77910c7d4586204c44862bdf2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &697293037
 GameObject:
   m_ObjectHideFlags: 0
@@ -496,7 +510,7 @@ MonoBehaviour:
   - type: 3
     name: J
     cardsprite: {fileID: 21300000, guid: 1d24309ed8dc64f42963a133b1492026, type: 3}
-  OpenCard: []
+  OpenCard: {fileID: 0}
   cards: []
   SelectedCards: []
 --- !u!1 &849212093

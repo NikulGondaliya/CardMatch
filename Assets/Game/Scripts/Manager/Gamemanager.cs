@@ -9,7 +9,7 @@ public class Gamemanager : MonoBehaviour
     
     public GridManager gridManager;
     public CardManager cardManager;
-
+    public SaveGame saveGame;
 
     private void Awake()
     {
