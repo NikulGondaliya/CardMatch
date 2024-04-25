@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -12,12 +10,21 @@ public class GridManager : MonoBehaviour
     [SerializeField]
     private Card cardPrefab;
     private Transform cardParant;
-    public List<Card> cards;
+    
+    private CardManager cardManager;
 
-    void Start()
+
+
+    private void Awake()
     {
         cardParant = grid.transform;
         grid.constraintCount = col;
+    }
+
+    void Start()
+    {
+        Gamemanager.instance.gridManager = this;    
+        cardManager = Gamemanager.instance.cardManager;
         CardGenerator();
     }
 
@@ -30,9 +37,12 @@ public class GridManager : MonoBehaviour
         {
             var card = Instantiate(cardPrefab, cardParant);
 
-            cards.Add(card);
+            cardManager.cards.Add(card);
 
         }
+
+        cardManager.SetCardData();
+
 
     }
 }

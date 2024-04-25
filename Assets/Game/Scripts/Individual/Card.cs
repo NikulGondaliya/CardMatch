@@ -12,7 +12,7 @@ public class Card : MonoBehaviour
     private float cardfliptime;
     private bool isHide = true;
     private bool isClick = false;
-
+    public CardDetail cardDetail;
     private Transform transform;
     private void Awake()
     {
@@ -22,6 +22,13 @@ public class Card : MonoBehaviour
 
     }
 
+    public void SetCardDetail(CardDetail cardDetail)
+    {
+        this.cardDetail = cardDetail;
+        frontSprite = cardDetail.cardsprite;
+    }
+
+
     private void Start()
     {
         Image.sprite = backSprite;
@@ -29,8 +36,8 @@ public class Card : MonoBehaviour
 
     public void OnClick()
     {
-        if(isClick) return;
-        
+        if (isClick) return;
+
         isClick = true;
 
         if (isHide)
@@ -55,7 +62,7 @@ public class Card : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, i, 0);
         }
         isHide = false;
-        isClick=false;
+        isClick = false;
     }
 
     private IEnumerator CloseCard()

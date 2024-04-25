@@ -364,8 +364,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 650349953}
+  - component: {fileID: 650349954}
   m_Layer: 0
-  m_Name: Manager
+  m_Name: GameManger
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -384,9 +385,120 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 849212094}
+  - {fileID: 697293038}
   m_Father: {fileID: 0}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &650349954
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 650349952}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f805a886ace3ae7498791c9ceb9ddc29, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  gridManager: {fileID: 0}
+  cardManager: {fileID: 0}
+--- !u!1 &697293037
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 697293038}
+  - component: {fileID: 697293039}
+  m_Layer: 0
+  m_Name: CardManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &697293038
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697293037}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 650349953}
+  m_RootOrder: 1
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &697293039
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 697293037}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8b15da6450ad08243897366c453c7540, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  AllCardsDetail:
+  - type: 1
+    name: A
+    cardsprite: {fileID: 21300000, guid: 457169d1ccd9a4046a50a6c620cb90ff, type: 3}
+  - type: 1
+    name: K
+    cardsprite: {fileID: 21300000, guid: e5f14b43c2d3b944095c51ac031697f2, type: 3}
+  - type: 1
+    name: Q
+    cardsprite: {fileID: 21300000, guid: d3053ea4d642a62429e702574bd0068c, type: 3}
+  - type: 1
+    name: J
+    cardsprite: {fileID: 21300000, guid: 8280696faaa706e428809e6699bf74cb, type: 3}
+  - type: 0
+    name: A
+    cardsprite: {fileID: 21300000, guid: 43774b7fa5118c64aae4bd9cc0e108a8, type: 3}
+  - type: 0
+    name: J
+    cardsprite: {fileID: 21300000, guid: 8b3ee1736bec68148a350f4956c48ca3, type: 3}
+  - type: 0
+    name: K
+    cardsprite: {fileID: 21300000, guid: 4e3eb2bb11d60264fa4ad29c48ac7d07, type: 3}
+  - type: 0
+    name: Q
+    cardsprite: {fileID: 21300000, guid: a569035b86dfc274f89995a89cbaf1b6, type: 3}
+  - type: 2
+    name: A
+    cardsprite: {fileID: 21300000, guid: 15d9c690b874cf0409d6f3edad0b1270, type: 3}
+  - type: 2
+    name: K
+    cardsprite: {fileID: 21300000, guid: daa48545de9aac74394696953ab0222c, type: 3}
+  - type: 2
+    name: Q
+    cardsprite: {fileID: 21300000, guid: 96e060d5145002441bcb2418d3c7b33b, type: 3}
+  - type: 2
+    name: J
+    cardsprite: {fileID: 21300000, guid: b9b2a3cfa5e947549ba3d2d17c881aaf, type: 3}
+  - type: 3
+    name: A
+    cardsprite: {fileID: 21300000, guid: 88b803313daf96246ade66e9a7f657c2, type: 3}
+  - type: 3
+    name: K
+    cardsprite: {fileID: 21300000, guid: d18fb977a055a384baee0843272b3ed2, type: 3}
+  - type: 3
+    name: Q
+    cardsprite: {fileID: 21300000, guid: 30fc00b8dd6f84342a94badf136ff725, type: 3}
+  - type: 3
+    name: J
+    cardsprite: {fileID: 21300000, guid: 1d24309ed8dc64f42963a133b1492026, type: 3}
+  OpenCard: []
+  cards: []
+  SelectedCards: []
 --- !u!1 &849212093
 GameObject:
   m_ObjectHideFlags: 0
@@ -431,11 +543,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5480b7fa56156214eb9650e0de0d925d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw: 6
-  col: 6
+  raw: 4
+  col: 4
   grid: {fileID: 364612981}
   cardPrefab: {fileID: 1904003380993505368, guid: 3ffa46ce365f06745bf0a3fbb05aa110, type: 3}
-  cards: []
 --- !u!1 &855803608
 GameObject:
   m_ObjectHideFlags: 0
