@@ -42,9 +42,17 @@ public class GridManager : MonoBehaviour
         raw = data.raw;
         col = data.col;
         grid.constraintCount = col;
+
+        if (data.cards.Count == 0)
+        {
+            CardGenerator();
+            return;
+        }
+
         for (int i = 0; i < data.cards.Count; i++)
         {
             var card = Instantiate(cardPrefab, cardParant);
+            card.name = i.ToString();
             card.SetWholeCard(data.cards[i]);
             cardManager.cards.Add(card);
         }
@@ -60,11 +68,10 @@ public class GridManager : MonoBehaviour
         for (int i = 0; i < totalobject; i++)
         {
             var card = Instantiate(cardPrefab, cardParant);
-
+            card.name = i.ToString();
             cardManager.cards.Add(card);
 
         }
-        //Debug.Log("Count = " + cardManager.cards.Count);
         cardManager.SetCardData();
     }
 }

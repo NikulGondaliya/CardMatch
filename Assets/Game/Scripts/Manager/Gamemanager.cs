@@ -17,7 +17,10 @@ public class Gamemanager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-
+    public void ResetGame()
+    {
+        gridManager.CardGenerator();
+    }
 
 
 

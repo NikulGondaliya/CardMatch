@@ -33,14 +33,17 @@ public class CardManager : MonoBehaviour
         {
             OpenCard.RemoveThisCard();
             card.RemoveThisCard();
+            OpenCard = null;
+            Gamemanager.instance.cardManager.SaveData();
+            CheckgameOver();
         }
         else
         {
             OpenCard.CloseCard();
             card.CloseCard();
+            Gamemanager.instance.cardManager.SaveData();
             OpenCard = null;
         }
-        SaveData();
     }
 
 
@@ -57,6 +60,30 @@ public class CardManager : MonoBehaviour
 
         Gamemanager.instance.saveGame.Save(data);
 
+    }
+
+
+    public void CheckgameOver()
+    {
+        bool isover = true;
+        foreach (var card in cards)
+        {
+            if (!card.IsHide)
+                isover = false;
+        }
+
+        if (!isover)
+        {
+            return;
+        }
+
+        foreach (var card in cards)
+        {
+            Destroy(card.gameObject);
+        }
+        cards.Clear();
+        SelectedCards.Clear();
+        Gamemanager.instance.ResetGame();
     }
 
 
@@ -110,7 +137,10 @@ public class CardManager : MonoBehaviour
             }
 
         }
-        //Debug.Log("Count = " + cards.Count);
+
+        SaveData();
+        CheckgameOver();
+
     }
 
 

@@ -557,8 +557,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5480b7fa56156214eb9650e0de0d925d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  raw: 4
-  col: 4
+  raw: 2
+  col: 2
   grid: {fileID: 364612981}
   cardPrefab: {fileID: 1904003380993505368, guid: 3ffa46ce365f06745bf0a3fbb05aa110, type: 3}
 --- !u!1 &855803608

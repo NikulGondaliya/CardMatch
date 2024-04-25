@@ -9,10 +9,10 @@ public class Card : MonoBehaviour
     public Sprite frontSprite;
 
     private Image Image;
-    private float cardfliptime;
-    private bool isOpen = false;
-    private bool IsHide = false;
-    private bool isClick = false;
+    private float cardfliptime = .5f;
+    public bool isOpen = false;
+    public bool IsHide = false;
+    public bool isClick = false;
     public CardDetail cardDetail;
     private Transform transform;
     private CanvasGroup CanvasGroup;
@@ -37,7 +37,6 @@ public class Card : MonoBehaviour
         savecardDetail details = new savecardDetail();
         details.type = (int)cardDetail.type;
         details.name = cardDetail.name;
-        details.isclick = isClick;
         details.isopen = isOpen;
         details.ishide = IsHide;
         return details;
@@ -47,7 +46,6 @@ public class Card : MonoBehaviour
     public void SetWholeCard(savecardDetail card)
     {
         IsHide = card.ishide;
-        isClick = card.isclick;
         isOpen = card.isopen;
 
 
@@ -62,11 +60,10 @@ public class Card : MonoBehaviour
 
         if (isOpen)
         {
+            Debug.Log("this is open " + name);
             Gamemanager.instance.cardManager.OpenCard = this;
             StartCoroutine(OpenCard());
-
         }
-
 
     }
 
@@ -89,21 +86,29 @@ public class Card : MonoBehaviour
 
     private IEnumerator OpenCard()
     {
-        Gamemanager.instance.cardManager.SaveData();
-        for (int i = 0; i < 90; i++)
+        float timer = 0f;
+        while (timer < cardfliptime)
         {
-            yield return new WaitForSeconds(cardfliptime / 90);
-            transform.rotation = Quaternion.Euler(0, i, 0);
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(0, 90f, timer / cardfliptime);
+            transform.rotation = Quaternion.Euler(0, alpha, 0);
+            yield return null;
         }
+
         Image.sprite = frontSprite;
-        for (int i = 90; i >= 0; i--)
+
+        timer = 0f;
+        while (timer < cardfliptime)
         {
-            yield return new WaitForSeconds(cardfliptime / 90);
-            transform.rotation = Quaternion.Euler(0, i, 0);
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(90, 0f, timer / cardfliptime);
+            transform.rotation = Quaternion.Euler(0, alpha, 0);
+            yield return null;
         }
-        Gamemanager.instance.cardManager.CompareCard(this);
+        transform.rotation = Quaternion.Euler(0, 0, 0);
         isOpen = true;
         isClick = false;
+        Gamemanager.instance.cardManager.CompareCard(this);
     }
 
     public void CloseCard()
@@ -115,37 +120,53 @@ public class Card : MonoBehaviour
 
     private IEnumerator CloseThisCard()
     {
-        for (int i = 0; i < 90; i++)
+
+        float timer = 0f;
+        while (timer < cardfliptime)
         {
-            yield return new WaitForSeconds(cardfliptime / 90);
-            transform.rotation = Quaternion.Euler(0, i, 0);
-        }
-        Debug.Log("BackSprite");
-        Image.sprite = backSprite;
-        for (int i = 90; i >= 0; i--)
-        {
-            yield return new WaitForSeconds(cardfliptime / 90);
-            transform.rotation = Quaternion.Euler(0, i, 0);
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(0, 90f, timer / cardfliptime);
+            transform.rotation = Quaternion.Euler(0, alpha, 0);
+            yield return null;
         }
 
+
+        Image.sprite = backSprite;
+
+        timer = 0f;
+        while (timer < cardfliptime)
+        {
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(90, 0f, timer / cardfliptime);
+            transform.rotation = Quaternion.Euler(0, alpha, 0);
+            yield return null;
+        }
+        transform.rotation = Quaternion.Euler(0, 0, 0);
+        isOpen = false;
         isClick = false;
     }
 
 
     public void RemoveThisCard()
     {
+        CanvasGroup.blocksRaycasts = false;
+        IsHide = true;
         //Image.color = new Color32(1, 1, 1, 0);
         StartCoroutine(RemoveCard());
     }
     private IEnumerator RemoveCard()
     {
-        float a = 1;
-        while (a > -.1f)
+        var c = cardfliptime / 2;
+        float timer = 0f;
+        while (timer < c)
         {
-            yield return new WaitForSeconds(cardfliptime / 10f);
-            CanvasGroup.alpha = a;
-            a -= .1f;
+            timer += Time.deltaTime;
+            float alpha = Mathf.Lerp(1f, 0f, timer / c);
+            CanvasGroup.alpha = alpha;
+            yield return null;
         }
+        CanvasGroup.alpha = 0f;
+
         CanvasGroup.blocksRaycasts = false;
         IsHide = true;
 
