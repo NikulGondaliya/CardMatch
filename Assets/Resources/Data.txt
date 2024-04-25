@@ -1,1 +1,1 @@
-{"raw":2,"col":2,"cards":[{"type":2,"name":"A","isopen":false,"ishide":false},{"type":0,"name":"Q","isopen":false,"ishide":false},{"type":0,"name":"Q","isopen":false,"ishide":false},{"type":2,"name":"A","isopen":false,"ishide":false}]}
+{"raw":2,"col":2,"cards":[{"type":0,"name":"J","isopen":false,"ishide":false},{"type":0,"name":"A","isopen":false,"ishide":false},{"type":0,"name":"J","isopen":false,"ishide":false},{"type":0,"name":"A","isopen":false,"ishide":false}]}

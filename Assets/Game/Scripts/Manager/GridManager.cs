@@ -28,12 +28,14 @@ public class GridManager : MonoBehaviour
 
         if (Gamemanager.instance.saveGame.isLastDataAvailable())
         {
+            Gamemanager.instance.uiManager.selectPanel.SetActive(false);
             CardGeneratorFormSavedata();
+            
         }
-        else
-        {
-            CardGenerator();
-        }
+        //else
+        //{
+        //    CardGenerator();
+        //}
     }
     public void CardGeneratorFormSavedata()
     {
@@ -60,6 +62,13 @@ public class GridManager : MonoBehaviour
         cardManager.SetCardData();
     }
 
+
+    public void CardGenerator(int row,int column)
+    {
+        raw = row;
+        col = column;
+        CardGenerator();
+    }
 
     public void CardGenerator()
     {

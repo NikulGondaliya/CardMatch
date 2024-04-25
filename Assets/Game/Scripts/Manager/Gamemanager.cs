@@ -7,6 +7,7 @@ public class Gamemanager : MonoBehaviour
 
     public static Gamemanager instance;
     
+    public UiManager uiManager;
     public GridManager gridManager;
     public CardManager cardManager;
     public SaveGame saveGame;
@@ -17,7 +18,7 @@ public class Gamemanager : MonoBehaviour
         DontDestroyOnLoad(this.gameObject);
     }
 
-    public void ResetGame()
+    public void StartGame()
     {
         gridManager.CardGenerator();
     }

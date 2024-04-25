@@ -83,7 +83,7 @@ public class CardManager : MonoBehaviour
         }
         cards.Clear();
         SelectedCards.Clear();
-        Gamemanager.instance.ResetGame();
+        Gamemanager.instance.uiManager.OnGameOver();
     }
 
 
