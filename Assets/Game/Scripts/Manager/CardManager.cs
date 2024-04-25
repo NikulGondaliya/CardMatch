@@ -33,6 +33,7 @@ public class CardManager : MonoBehaviour
         {
             OpenCard.RemoveThisCard();
             card.RemoveThisCard();
+            Gamemanager.instance.soundManager.MatchCard();
             OpenCard = null;
             Gamemanager.instance.cardManager.SaveData();
             CheckgameOver();
@@ -41,6 +42,7 @@ public class CardManager : MonoBehaviour
         {
             OpenCard.CloseCard();
             card.CloseCard();
+            Gamemanager.instance.soundManager.MitchMatch();
             Gamemanager.instance.cardManager.SaveData();
             OpenCard = null;
         }

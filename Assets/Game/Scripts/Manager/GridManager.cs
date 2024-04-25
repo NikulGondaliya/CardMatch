@@ -25,22 +25,16 @@ public class GridManager : MonoBehaviour
     {
         Gamemanager.instance.gridManager = this;
         cardManager = Gamemanager.instance.cardManager;
-
         if (Gamemanager.instance.saveGame.isLastDataAvailable())
         {
             Gamemanager.instance.uiManager.selectPanel.SetActive(false);
             CardGeneratorFormSavedata();
-            
         }
-        //else
-        //{
-        //    CardGenerator();
-        //}
+       
     }
     public void CardGeneratorFormSavedata()
     {
         SaveData data = Gamemanager.instance.saveGame.GetData();
-        cardManager = Gamemanager.instance.cardManager;
         raw = data.raw;
         col = data.col;
         grid.constraintCount = col;

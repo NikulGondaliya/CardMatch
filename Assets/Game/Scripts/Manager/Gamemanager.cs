@@ -10,6 +10,8 @@ public class Gamemanager : MonoBehaviour
     public UiManager uiManager;
     public GridManager gridManager;
     public CardManager cardManager;
+    public SoundManager soundManager;
+    public ScoreManager scoreManager;
     public SaveGame saveGame;
 
     private void Awake()

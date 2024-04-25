@@ -86,6 +86,7 @@ public class Card : MonoBehaviour
 
     private IEnumerator OpenCard()
     {
+        Gamemanager.instance.soundManager.FlipCard();
         float timer = 0f;
         while (timer < cardfliptime)
         {

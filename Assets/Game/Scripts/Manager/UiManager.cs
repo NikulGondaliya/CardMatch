@@ -5,13 +5,13 @@ using UnityEngine.UI;
 public class UiManager : MonoBehaviour
 {
     public GameObject selectPanel;
-    public GameObject gameOverPanel;
+    //public GameObject gameOverPanel;
     
     
     public List<Button> RowButtons;
     public List<Button> ColumnButtons;
     public Button startButton;
-
+    public TMPro.TMP_Text ScoreText;
     public int row, column = 0;
 
     private void Start()
@@ -30,7 +30,6 @@ public class UiManager : MonoBehaviour
         {
             CheckCardCount();
         }
-
     }
     public void OnRawClick(Button button)
     {
@@ -71,10 +70,14 @@ public class UiManager : MonoBehaviour
         }
     }
 
-
+    public void SetScore(int score)
+    {
+        ScoreText.text = score.ToString();
+    }
     public void StartBtnClick()
     {
         selectPanel.SetActive(false);
+        Debug.Log("Click");
         Gamemanager.instance.gridManager.CardGenerator(row,column);
     }
 
