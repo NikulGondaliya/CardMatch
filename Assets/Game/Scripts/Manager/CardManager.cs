@@ -34,6 +34,7 @@ public class CardManager : MonoBehaviour
             OpenCard.RemoveThisCard();
             card.RemoveThisCard();
             Gamemanager.instance.soundManager.MatchCard();
+            Gamemanager.instance.scoreManager.IncrementScore(2);
             OpenCard = null;
             Gamemanager.instance.cardManager.SaveData();
             CheckgameOver();
@@ -54,7 +55,7 @@ public class CardManager : MonoBehaviour
         var data = new SaveData();
         data.raw = Gamemanager.instance.gridManager.raw;
         data.col = Gamemanager.instance.gridManager.col;
-
+        data.score = Gamemanager.instance.scoreManager.score;
         for (int i = 0; i < cards.Count; i++)
         {
             data.cards.Add(cards[i].GetCardData());

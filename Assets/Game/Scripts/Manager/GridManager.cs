@@ -37,6 +37,7 @@ public class GridManager : MonoBehaviour
         SaveData data = Gamemanager.instance.saveGame.GetData();
         raw = data.raw;
         col = data.col;
+        Gamemanager.instance.scoreManager.score = data.score;
         grid.constraintCount = col;
 
         if (data.cards.Count == 0)
@@ -61,6 +62,7 @@ public class GridManager : MonoBehaviour
     {
         raw = row;
         col = column;
+        Gamemanager.instance.scoreManager.score = 0;
         CardGenerator();
     }
 

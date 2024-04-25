@@ -12,7 +12,7 @@ public class SaveGame : MonoBehaviour
         return PlayerPrefs.HasKey("LastData");
     }
 
-        string path = "Assets/Resources/Data.txt";
+    string path = "Assets/Resources/Data.txt";
     public SaveData GetData()
     {
         //Read the text from directly from the test.txt file
@@ -43,7 +43,9 @@ public class SaveGame : MonoBehaviour
 [Serializable]
 public class SaveData
 {
-    public int raw, col;
+    public int raw;
+    public int col;
+    public int score;
     public List<savecardDetail> cards = new List<savecardDetail>();
 
 }

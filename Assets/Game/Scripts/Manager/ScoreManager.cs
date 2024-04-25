@@ -12,7 +12,19 @@ public class ScoreManager : MonoBehaviour
         set
         {
             Score = value;
+            Gamemanager.instance.uiManager.SetScore(Score);
         }
+    }
+
+
+    public void IncrementScore(int increment)
+    {
+        Score += increment;
+    }
+
+    public void DecripmentScore(int decripment)
+    {
+        Score -= decripment;
     }
 
 }
