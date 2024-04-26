@@ -1,14 +1,13 @@
 using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class Card : MonoBehaviour
 {
     public Sprite backSprite;
     public Sprite frontSprite;
 
-    private Image Image;
+    private UnityEngine.UI.Image Image;
     private float cardfliptime = .5f;
     public bool isOpen = false;
     public bool IsHide = false;
@@ -20,8 +19,8 @@ public class Card : MonoBehaviour
     {
         CanvasGroup = GetComponent<CanvasGroup>();
         transform = GetComponent<Transform>();
-        Image = GetComponent<Image>();
-        GetComponent<Button>().onClick.AddListener(() => this.OnClick());
+        Image = GetComponent<UnityEngine.UI.Image>();
+        GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => this.OnClick());
 
     }
 
@@ -60,8 +59,6 @@ public class Card : MonoBehaviour
 
         if (isOpen)
         {
-            Debug.Log("this is open " + name);
-            Gamemanager.instance.cardManager.OpenCard = this;
             StartCoroutine(OpenCard());
         }
 
@@ -148,6 +145,7 @@ public class Card : MonoBehaviour
     }
 
 
+
     public void RemoveThisCard()
     {
         CanvasGroup.blocksRaycasts = false;
@@ -172,12 +170,4 @@ public class Card : MonoBehaviour
         IsHide = true;
 
     }
-
-
-
-
-
-
-
-
 }

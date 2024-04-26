@@ -18,22 +18,16 @@ public class GridManager : MonoBehaviour
     private void Awake()
     {
         cardParant = grid.transform;
-
     }
 
     void Start()
     {
         Gamemanager.instance.gridManager = this;
         cardManager = Gamemanager.instance.cardManager;
-        if (Gamemanager.instance.saveGame.isLastDataAvailable())
-        {
-            Gamemanager.instance.uiManager.selectPanel.SetActive(false);
-            CardGeneratorFormSavedata();
-        }
-       
     }
     public void CardGeneratorFormSavedata()
     {
+        cardManager = Gamemanager.instance.cardManager;
         SaveData data = Gamemanager.instance.saveGame.GetData();
         raw = data.raw;
         col = data.col;
@@ -42,7 +36,7 @@ public class GridManager : MonoBehaviour
 
         if (data.cards.Count == 0)
         {
-            CardGenerator();
+            Gamemanager.instance.uiManager.OnGameOver();
             return;
         }
 

@@ -2,17 +2,9 @@ using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    private AudioSource m_AudioSource1;
-    public AudioSource m_AudioSource2;
-    [SerializeField] 
-    private AudioClip flip, match, mitchMatch;
-
-
-    private void Start()
-    {
-        m_AudioSource1 = GetComponent<AudioSource>();
-
-    }
+    [SerializeField] private AudioSource m_AudioSource1;
+    [SerializeField] private AudioSource m_AudioSource2;
+    [SerializeField] private AudioClip flip, match, mitchMatch;
 
 
     public void FlipCard()

@@ -1,23 +1,18 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using UnityEditor;
-using UnityEngine;
 
-public class SaveGame : MonoBehaviour
+
+public class SaveGame : UnityEngine.MonoBehaviour
 {
+    string path = "Assets/Resources/Data.txt";
 
     public bool isLastDataAvailable()
     {
-        return PlayerPrefs.HasKey("LastData");
+        return UnityEngine.PlayerPrefs.HasKey("LastData");
     }
 
-    string path = "Assets/Resources/Data.txt";
     public SaveData GetData()
     {
-        //Read the text from directly from the test.txt file
-        StreamReader reader = new StreamReader(path);
-        SaveData data = JsonUtility.FromJson<SaveData>(reader.ReadToEnd());
+        System.IO.StreamReader reader = new System.IO.StreamReader(path);
+        SaveData data = UnityEngine.JsonUtility.FromJson<SaveData>(reader.ReadToEnd());
         reader.Close();
         return data;
     }
@@ -25,32 +20,26 @@ public class SaveGame : MonoBehaviour
 
     public void Save(SaveData data)
     {
-        string datajson = JsonUtility.ToJson(data);
-        Debug.Log("SetData = " + datajson);
-        StreamWriter writer = new StreamWriter(path, false);
+        string datajson = UnityEngine.JsonUtility.ToJson(data);
+        UnityEngine.Debug.Log("SetData = " + datajson);
+        System.IO.StreamWriter writer = new System.IO.StreamWriter(path, false);
         writer.WriteLine(datajson);
         writer.Close();
-        PlayerPrefs.SetString("LastData", "Saved");
-        ////Re-import the file to update the reference in the editor
-        //AssetDatabase.ImportAsset(path);
-        //TextAsset asset = Resources.Load("test");
-        ////Print the text from the file
-        //Debug.Log(asset.text);
-
+        UnityEngine.PlayerPrefs.SetString("LastData", "Saved");
     }
 }
 
-[Serializable]
+[System.Serializable]
 public class SaveData
 {
     public int raw;
     public int col;
     public int score;
-    public List<savecardDetail> cards = new List<savecardDetail>();
+    public System.Collections.Generic.List<savecardDetail> cards = new System.Collections.Generic.List<savecardDetail>();
 
 }
 
-[Serializable]
+[System.Serializable]
 public class savecardDetail
 {
     public int type;

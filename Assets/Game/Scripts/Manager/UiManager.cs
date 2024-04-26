@@ -1,18 +1,16 @@
-using System.Collections.Generic;
+
 using UnityEngine;
-using UnityEngine.UI;
+
 
 public class UiManager : MonoBehaviour
 {
     public GameObject selectPanel;
-    //public GameObject gameOverPanel;
-    
-    
-    public List<Button> RowButtons;
-    public List<Button> ColumnButtons;
-    public Button startButton;
-    public TMPro.TMP_Text ScoreText;
-    public int row, column = 0;
+
+    [SerializeField] private System.Collections.Generic.List<UnityEngine.UI.Button> RowButtons;
+    [SerializeField] private System.Collections.Generic.List<UnityEngine.UI.Button> ColumnButtons;
+    [SerializeField] private UnityEngine.UI.Button startButton;
+    [SerializeField] private TMPro.TMP_Text ScoreText;
+    [SerializeField] private int row, column = 0;
 
     private void Start()
     {
@@ -31,7 +29,7 @@ public class UiManager : MonoBehaviour
             CheckCardCount();
         }
     }
-    public void OnRawClick(Button button)
+    public void OnRawClick(UnityEngine.UI.Button button)
     {
         foreach (var btn in RowButtons)
         {
@@ -48,7 +46,7 @@ public class UiManager : MonoBehaviour
             CheckCardCount();
         }
     }
-    public void OnColumnClick(Button button)
+    public void OnColumnClick(UnityEngine.UI.Button button)
     {
         foreach (var btn in ColumnButtons)
         {
@@ -59,15 +57,7 @@ public class UiManager : MonoBehaviour
 
     public void CheckCardCount()
     {
-        Debug.Log("Raw = " + row + "   " + column);
-        if ((row * column) % 2 == 0)
-        {
-            startButton.interactable = true;
-        }
-        else
-        {
-            startButton.interactable = false;
-        }
+        startButton.interactable = (row * column) % 2 == 0;
     }
 
     public void SetScore(int score)
@@ -77,8 +67,7 @@ public class UiManager : MonoBehaviour
     public void StartBtnClick()
     {
         selectPanel.SetActive(false);
-        Debug.Log("Click");
-        Gamemanager.instance.gridManager.CardGenerator(row,column);
+        Gamemanager.instance.gridManager.CardGenerator(row, column);
     }
 
     public void OnGameOver()

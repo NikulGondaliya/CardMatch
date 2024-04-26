@@ -1,18 +1,13 @@
 
-using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    public List<CardDetail> AllCardsDetail;
-
-
-
+    public System.Collections.Generic.List<CardDetail> AllCardsDetail;
+    public System.Collections.Generic.List<CardDetail> SelectedCards = new System.Collections.Generic.List<CardDetail>();
+    public System.Collections.Generic.List<Card> cards = new System.Collections.Generic.List<Card>();
     public Card OpenCard;
-
-    public List<Card> cards = new List<Card>();
-    public List<CardDetail> SelectedCards = new List<CardDetail>();
 
     private void Start()
     {
@@ -60,13 +55,12 @@ public class CardManager : MonoBehaviour
         {
             data.cards.Add(cards[i].GetCardData());
         }
-
         Gamemanager.instance.saveGame.Save(data);
 
     }
 
 
-    public void CheckgameOver()
+    private void CheckgameOver()
     {
         bool isover = true;
         foreach (var card in cards)
@@ -79,13 +73,13 @@ public class CardManager : MonoBehaviour
         {
             return;
         }
-
         foreach (var card in cards)
         {
             Destroy(card.gameObject);
         }
         cards.Clear();
         SelectedCards.Clear();
+        PlayerPrefs.DeleteAll();
         Gamemanager.instance.uiManager.OnGameOver();
     }
 

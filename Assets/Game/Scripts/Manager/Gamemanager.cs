@@ -1,5 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
+
 using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
@@ -19,7 +18,14 @@ public class Gamemanager : MonoBehaviour
         instance = this;
         DontDestroyOnLoad(this.gameObject);
     }
-
+    private void Start()
+    {
+        if (saveGame.isLastDataAvailable())
+        {
+            uiManager.selectPanel.SetActive(false);
+            gridManager.CardGeneratorFormSavedata();
+        }
+    }
     public void StartGame()
     {
         gridManager.CardGenerator();
