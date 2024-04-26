@@ -27,20 +27,20 @@ public class CardManager : MonoBehaviour
         if (OpenCard.cardDetail == card.cardDetail)
         {
             OpenCard.RemoveThisCard();
+            OpenCard = null;
             card.RemoveThisCard();
             Gamemanager.instance.soundManager.MatchCard();
             Gamemanager.instance.scoreManager.IncrementScore(2);
-            OpenCard = null;
             Gamemanager.instance.cardManager.SaveData();
             CheckgameOver();
         }
         else
         {
             OpenCard.CloseCard();
+            OpenCard = null;
             card.CloseCard();
             Gamemanager.instance.soundManager.MitchMatch();
             Gamemanager.instance.cardManager.SaveData();
-            OpenCard = null;
         }
     }
 
@@ -137,7 +137,6 @@ public class CardManager : MonoBehaviour
 
         SaveData();
         CheckgameOver();
-
     }
 
 

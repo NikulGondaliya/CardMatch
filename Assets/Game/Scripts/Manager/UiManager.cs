@@ -62,7 +62,7 @@ public class UiManager : MonoBehaviour
 
     public void SetScore(int score)
     {
-        ScoreText.text = score.ToString();
+        ScoreText.text = "Points: " + score.ToString();
     }
     public void StartBtnClick()
     {
