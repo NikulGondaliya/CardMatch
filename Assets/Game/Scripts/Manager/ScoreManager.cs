@@ -17,12 +17,14 @@ public class ScoreManager : MonoBehaviour
 
     public void IncrementScore(int increment)
     {
-        Score += increment;
+        score += increment;
+        //Debug.Log("Score = " + Score);
     }
 
     public void DecripmentScore(int decripment)
     {
-        Score -= decripment;
+        score -= decripment;
+        //Debug.Log("Score = " + Score);
     }
 
 }

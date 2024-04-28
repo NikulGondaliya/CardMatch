@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using UnityEngine;
 
@@ -9,10 +10,10 @@ public class Card : MonoBehaviour
 
     private UnityEngine.UI.Image Image;
     private float cardfliptime = .5f;
-    public bool isOpen = false;
-    public bool IsHide = false;
-    public bool isClick = false;
-    public CardDetail cardDetail;
+    private bool isOpen = false;
+    private bool IsHide = false;
+    private bool isClick = false;
+    private CardDetail cardDetail;
     private Transform transform;
     private CanvasGroup CanvasGroup;
     private void Awake()
@@ -21,8 +22,13 @@ public class Card : MonoBehaviour
         transform = GetComponent<Transform>();
         Image = GetComponent<UnityEngine.UI.Image>();
         GetComponent<UnityEngine.UI.Button>().onClick.AddListener(() => this.OnClick());
-
     }
+
+    public bool GetIsCardHide() => IsHide;
+    public bool GetIsCardOpen() => isOpen;
+
+    public CardDetail GetThisCardDetail() => cardDetail;
+
 
     public void SetCardDetail(CardDetail cardDetail)
     {
@@ -33,11 +39,13 @@ public class Card : MonoBehaviour
 
     public savecardDetail GetCardData()
     {
+        Debug.Log("Before .......... type " + cardDetail.type + " no  " + cardDetail.no);
         savecardDetail details = new savecardDetail();
-        details.type = (int)cardDetail.type;
-        details.name = cardDetail.name;
+        details.type = Enum.GetName(typeof(cardType), cardDetail.type);
+        details.no = cardDetail.no;
         details.isopen = isOpen;
         details.ishide = IsHide;
+        Debug.Log("after .......... type " + details.type + " no  " + details.no);
         return details;
     }
 
@@ -46,39 +54,21 @@ public class Card : MonoBehaviour
     {
         IsHide = card.ishide;
         isOpen = card.isopen;
-
-
-        cardDetail = Gamemanager.instance.cardManager.GetCardDetail(card.type, card.name);
+        cardDetail = Gamemanager.instance.cardManager.GetCardDetail(card.type, card.no);
         frontSprite = cardDetail.cardsprite;
-
-        if (IsHide)
-        {
-            RemoveThisCard();
-            return;
-        }
-
-        if (isOpen)
-        {
-            StartCoroutine(OpenCard());
-        }
-
+        if (IsHide) RemoveThisCard();
+        else if (isOpen) StartCoroutine(OpenCard());
     }
 
 
-    private void Start()
-    {
-        Image.sprite = backSprite;
-    }
+    private void Start() => Image.sprite = backSprite;
+
 
     public void OnClick()
     {
         if (isClick) return;
-
-        isClick = true;
-
-        if (!isOpen)
-            StartCoroutine(OpenCard());
-
+        else isClick = true;
+        if (!isOpen) StartCoroutine(OpenCard());
     }
 
     private IEnumerator OpenCard()
@@ -92,9 +82,7 @@ public class Card : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, alpha, 0);
             yield return null;
         }
-
         Image.sprite = frontSprite;
-
         timer = 0f;
         while (timer < cardfliptime)
         {
@@ -127,10 +115,7 @@ public class Card : MonoBehaviour
             transform.rotation = Quaternion.Euler(0, alpha, 0);
             yield return null;
         }
-
-
         Image.sprite = backSprite;
-
         timer = 0f;
         while (timer < cardfliptime)
         {
@@ -150,7 +135,6 @@ public class Card : MonoBehaviour
     {
         CanvasGroup.blocksRaycasts = false;
         IsHide = true;
-        //Image.color = new Color32(1, 1, 1, 0);
         StartCoroutine(RemoveCard());
     }
     private IEnumerator RemoveCard()
@@ -165,9 +149,8 @@ public class Card : MonoBehaviour
             yield return null;
         }
         CanvasGroup.alpha = 0f;
-
         CanvasGroup.blocksRaycasts = false;
         IsHide = true;
-
     }
 }
+

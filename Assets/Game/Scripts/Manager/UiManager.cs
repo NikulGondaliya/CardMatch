@@ -38,6 +38,16 @@ public class UiManager : MonoBehaviour
         button.interactable = false;
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Escape))
+        {
+            Application.Quit();
+        }
+    }
+
+
+
     public void OnColumn(int no)
     {
         column = no;

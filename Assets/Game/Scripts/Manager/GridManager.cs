@@ -1,30 +1,37 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class GridManager : MonoBehaviour
 {
     [SerializeField]
-    public int raw, col;
+    private int raw, col;
     [SerializeField]
     private GridLayoutGroup grid;
     [SerializeField]
     private Card cardPrefab;
     private Transform cardParant;
-
     private CardManager cardManager;
 
-
+    
 
     private void Awake()
     {
         cardParant = grid.transform;
     }
 
+
+
     void Start()
     {
         Gamemanager.instance.gridManager = this;
         cardManager = Gamemanager.instance.cardManager;
     }
+
+    public int GetRaw() => raw;
+    public int GetCol() => col;
+
+
     public void CardGeneratorFormSavedata()
     {
         cardManager = Gamemanager.instance.cardManager;
@@ -40,19 +47,21 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+        List<Card> cards = new List<Card>();
+
         for (int i = 0; i < data.cards.Count; i++)
         {
             var card = Instantiate(cardPrefab, cardParant);
             card.name = i.ToString();
             card.SetWholeCard(data.cards[i]);
-            cardManager.cards.Add(card);
+            cards.Add(card);
         }
-
-        cardManager.SetCardData();
+        cardManager.cards = cards;
+        
     }
 
 
-    public void CardGenerator(int row,int column)
+    public void CardGenerator(int row, int column)
     {
         raw = row;
         col = column;

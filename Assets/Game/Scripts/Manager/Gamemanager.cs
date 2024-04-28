@@ -31,6 +31,11 @@ public class Gamemanager : MonoBehaviour
         gridManager.CardGenerator();
     }
 
+    public void ResetGame()
+    {
+        cardManager.ResetAllCard();
+    }
+
 
 
 

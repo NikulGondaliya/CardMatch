@@ -1,4 +1,4 @@
-
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -17,39 +17,48 @@ public class CardManager : MonoBehaviour
 
     public void CompareCard(Card card)
     {
-
         if (OpenCard == null)
         {
             OpenCard = card;
             return;
         }
 
-        if (OpenCard.cardDetail == card.cardDetail)
-        {
-            OpenCard.RemoveThisCard();
-            OpenCard = null;
-            card.RemoveThisCard();
-            Gamemanager.instance.soundManager.MatchCard();
-            Gamemanager.instance.scoreManager.IncrementScore(2);
-            Gamemanager.instance.cardManager.SaveData();
-            CheckgameOver();
-        }
+        if (isEqualCard(OpenCard.GetThisCardDetail(), card.GetThisCardDetail()))
+            MatchFound(OpenCard, card);
         else
-        {
-            OpenCard.CloseCard();
-            OpenCard = null;
-            card.CloseCard();
-            Gamemanager.instance.soundManager.MitchMatch();
-            Gamemanager.instance.cardManager.SaveData();
-        }
+            DontMatch(OpenCard, card);
+
+        OpenCard = null;
     }
+
+
+    public bool isEqualCard(CardDetail First, CardDetail Sec) => First.type.Equals(Sec.type) && First.no == Sec.no;
+
+    public void MatchFound(Card First, Card Sec)
+    {
+        First.RemoveThisCard();
+        Sec.RemoveThisCard();
+        Gamemanager.instance.soundManager.MatchCard();
+        Gamemanager.instance.scoreManager.IncrementScore(2);
+        Gamemanager.instance.cardManager.SaveData();
+        CheckgameOver();
+    }
+
+    public void DontMatch(Card First, Card Sec)
+    {
+        First.CloseCard();
+        Sec.CloseCard();
+        Gamemanager.instance.soundManager.MitchMatch();
+        Gamemanager.instance.cardManager.SaveData();
+    }
+
 
 
     public void SaveData()
     {
         var data = new SaveData();
-        data.raw = Gamemanager.instance.gridManager.raw;
-        data.col = Gamemanager.instance.gridManager.col;
+        data.raw = Gamemanager.instance.gridManager.GetRaw();
+        data.col = Gamemanager.instance.gridManager.GetCol();
         data.score = Gamemanager.instance.scoreManager.score;
         for (int i = 0; i < cards.Count; i++)
         {
@@ -62,21 +71,16 @@ public class CardManager : MonoBehaviour
 
     private void CheckgameOver()
     {
-        bool isover = true;
-        foreach (var card in cards)
-        {
-            if (!card.IsHide)
-                isover = false;
-        }
+        var isover = true;
+        foreach (var card in cards) if (!card.GetIsCardHide()) isover = false;
 
-        if (!isover)
-        {
-            return;
-        }
-        foreach (var card in cards)
-        {
-            Destroy(card.gameObject);
-        }
+        if (!isover) return;
+        ResetAllCard();
+    }
+
+    public void ResetAllCard()
+    {
+        foreach (var card in cards) Destroy(card.gameObject);
         cards.Clear();
         SelectedCards.Clear();
         PlayerPrefs.DeleteAll();
@@ -86,13 +90,17 @@ public class CardManager : MonoBehaviour
 
 
 
-    public CardDetail GetCardDetail(int type, string name)
+    public CardDetail GetCardDetail(string type, int no)
     {
-        return AllCardsDetail.Find((x) => x.name == name && x.type == (cardType)type);
+        cardType cardType = converToEnum<cardType>(type);
+        return AllCardsDetail.Find((x) => x.type == cardType && x.no == no);
     }
 
 
-
+    public cardType converToEnum<cardType>(string enumValue)
+    {
+        return (cardType)Enum.Parse(typeof(cardType), enumValue);
+    }
 
 
     public void SetCardData()
@@ -104,7 +112,7 @@ public class CardManager : MonoBehaviour
 
         for (int i = 0; i < count; i++)
         {
-            var card = AllCardsDetail[Random.Range(0, AllCardsDetail.Count)];
+            var card = AllCardsDetail[UnityEngine.Random.Range(0, AllCardsDetail.Count)];
 
             if (SelectedCards.Find((x) => x == card) != null)
             {
@@ -115,12 +123,11 @@ public class CardManager : MonoBehaviour
                 SelectedCards.Add(card);
             }
         }
-        SetCardData(cards.ToArray());
+        SetCardDataTolist(cards.ToArray());
 
     }
 
-
-    public void SetCardData(Card[] allcards)
+    public void SetCardDataTolist(Card[] allcards)
     {
         var list = allcards.ToList<Card>();
 
@@ -128,13 +135,11 @@ public class CardManager : MonoBehaviour
         {
             for (int i = 0; i < 2; i++)
             {
-                int no = Random.Range(0, list.Count);
+                int no = UnityEngine.Random.Range(0, list.Count);
                 list[no].SetCardDetail(selectedcard);
                 list.RemoveAt(no);
             }
-
         }
-
         SaveData();
         CheckgameOver();
     }
@@ -146,14 +151,14 @@ public class CardManager : MonoBehaviour
 public class CardDetail
 {
     public cardType type;
-    public string name;
+    public int no;
     public Sprite cardsprite;
 }
 
 public enum cardType
 {
-    club,
-    diamond,
-    heart,
-    spade
+    Club,
+    Diamond,
+    Heart,
+    Spade
 }
