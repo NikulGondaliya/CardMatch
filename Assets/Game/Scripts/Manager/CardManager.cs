@@ -27,8 +27,6 @@ public class CardManager : MonoBehaviour
             MatchFound(OpenCard, card);
         else
             DontMatch(OpenCard, card);
-
-        OpenCard = null;
     }
 
 
@@ -37,6 +35,7 @@ public class CardManager : MonoBehaviour
     {
         First.RemoveThisCard();
         Sec.RemoveThisCard();
+        OpenCard = null;
         Gamemanager.instance.soundManager.MatchCard();
         Gamemanager.instance.scoreManager.IncrementScore(2);
         Gamemanager.instance.cardManager.SaveData();
@@ -47,6 +46,7 @@ public class CardManager : MonoBehaviour
     {
         First.CloseCard();
         Sec.CloseCard();
+        OpenCard = null;
         Gamemanager.instance.soundManager.MitchMatch();
         Gamemanager.instance.cardManager.SaveData();
     }

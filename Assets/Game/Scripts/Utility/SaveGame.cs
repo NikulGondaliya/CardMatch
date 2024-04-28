@@ -1,13 +1,16 @@
 
 
-using System.Diagnostics;
-
 public class SaveGame : UnityEngine.MonoBehaviour
 {
-    private readonly string path = "Assets/Resources/Data.txt";
+    private string path;
+
+    private void Awake()
+    {
+        path = UnityEngine.Application.persistentDataPath + "/Data.txt";
+    }
 
     public bool isLastDataAvailable() => UnityEngine.PlayerPrefs.HasKey("LastData");
-    
+
 
     public SaveData GetData()
     {
@@ -39,7 +42,7 @@ public class SaveData
     public int score;
     public System.Collections.Generic.List<savecardDetail> cards = new System.Collections.Generic.List<savecardDetail>();
     public SaveData() { }
-    public SaveData(int raw, int col, int score , System.Collections.Generic.List<savecardDetail> cards)
+    public SaveData(int raw, int col, int score, System.Collections.Generic.List<savecardDetail> cards)
     {
         this.raw = raw;
         this.col = col;
@@ -56,7 +59,7 @@ public class savecardDetail
     public bool isopen;
     public bool ishide;
     public savecardDetail() { }
-    public savecardDetail(string cardtype,int cardNo,bool isCardopen,bool iscardHide)
+    public savecardDetail(string cardtype, int cardNo, bool isCardopen, bool iscardHide)
     {
         type = cardtype;
         no = cardNo;
