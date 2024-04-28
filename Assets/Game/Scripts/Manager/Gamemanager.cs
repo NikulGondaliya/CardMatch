@@ -3,9 +3,7 @@ using UnityEngine;
 
 public class Gamemanager : MonoBehaviour
 {
-
     public static Gamemanager instance;
-    
     public UiManager uiManager;
     public GridManager gridManager;
     public CardManager cardManager;
@@ -26,19 +24,6 @@ public class Gamemanager : MonoBehaviour
             gridManager.CardGeneratorFormSavedata();
         }
     }
-    public void StartGame()
-    {
-        gridManager.CardGenerator();
-    }
-
-    public void ResetGame()
-    {
-        cardManager.ResetAllCard();
-    }
-
-
-
-
-
-
+    public void StartGame() => gridManager.CardGenerator();
+    public void ResetGame() => cardManager.ResetAllCard();
 }

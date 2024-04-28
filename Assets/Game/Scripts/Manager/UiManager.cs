@@ -1,6 +1,4 @@
-
 using UnityEngine;
-
 
 public class UiManager : MonoBehaviour
 {
@@ -17,72 +15,52 @@ public class UiManager : MonoBehaviour
         Gamemanager.instance.uiManager = this;
         startButton.interactable = false;
     }
-
-
-
     public void OnRaw(int no)
     {
         row = no;
-
-        if (column != 0)
-        {
-            CheckCardCount();
-        }
+        Gamemanager.instance.soundManager.ClickButton();
+        if (column != 0) CheckCardCount();
     }
     public void OnRawClick(UnityEngine.UI.Button button)
     {
-        foreach (var btn in RowButtons)
-        {
-            btn.interactable = true;
-        }
+        foreach (var btn in RowButtons) btn.interactable = true;
         button.interactable = false;
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Escape))
-        {
-            Application.Quit();
-        }
+        if (Input.GetKeyDown(KeyCode.Escape)) Application.Quit();
     }
-
-
 
     public void OnColumn(int no)
     {
         column = no;
-        if (row != 0)
-        {
-            CheckCardCount();
-        }
+        Gamemanager.instance.soundManager.ClickButton();
+        if (row != 0) CheckCardCount();
     }
     public void OnColumnClick(UnityEngine.UI.Button button)
     {
-        foreach (var btn in ColumnButtons)
-        {
-            btn.interactable = true;
-        }
+        foreach (var btn in ColumnButtons) btn.interactable = true;
         button.interactable = false;
     }
 
-    public void CheckCardCount()
-    {
-        startButton.interactable = (row * column) % 2 == 0;
-    }
-
-    public void SetScore(int score)
-    {
-        ScoreText.text = "Points: " + score.ToString();
-    }
     public void StartBtnClick()
     {
         selectPanel.SetActive(false);
+        Gamemanager.instance.soundManager.ClickButton();
         Gamemanager.instance.gridManager.CardGenerator(row, column);
     }
 
-    public void OnGameOver()
+    public void ResetButtonClick()
     {
-        selectPanel.SetActive(true);
+        Gamemanager.instance.soundManager.ClickButton();
+        Gamemanager.instance.ResetGame();
     }
+
+    public void CheckCardCount() => startButton.interactable = (row * column) % 2 == 0;
+    public void SetScore(int score) => ScoreText.text = "Points: " + score.ToString();
+    public void OnGameOver() => selectPanel.SetActive(true);
+
+
 
 }

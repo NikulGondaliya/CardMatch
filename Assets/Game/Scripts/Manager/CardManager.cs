@@ -1,19 +1,20 @@
-using System;
 using System.Linq;
 using UnityEngine;
 
 public class CardManager : MonoBehaviour
 {
-    public System.Collections.Generic.List<CardDetail> AllCardsDetail;
-    public System.Collections.Generic.List<CardDetail> SelectedCards = new System.Collections.Generic.List<CardDetail>();
-    public System.Collections.Generic.List<Card> cards = new System.Collections.Generic.List<Card>();
-    public Card OpenCard;
+    [SerializeField] private System.Collections.Generic.List<CardDetail> AllCardsDetail;
+    [SerializeField] private System.Collections.Generic.List<CardDetail> SelectedCards = new System.Collections.Generic.List<CardDetail>();
+    [SerializeField] private System.Collections.Generic.List<Card> cards = new System.Collections.Generic.List<Card>();
+    [SerializeField] private Card OpenCard;
+    [SerializeField] private Sprite CardBackGround;
 
-    private void Start()
-    {
-        Gamemanager.instance.cardManager = this;
-    }
 
+    private void Start() => Gamemanager.instance.cardManager = this;
+    public void SetCardList(System.Collections.Generic.List<Card> cards) => this.cards = cards;
+    public Sprite GetBackgroundSprite() => CardBackGround;
+    public bool isEqualCard(CardDetail First, CardDetail Sec) => First.type.Equals(Sec.type) && First.no == Sec.no;
+    public cardType converToEnum<cardType>(string enumValue) => (cardType)System.Enum.Parse(typeof(cardType), enumValue);
 
     public void CompareCard(Card card)
     {
@@ -22,7 +23,6 @@ public class CardManager : MonoBehaviour
             OpenCard = card;
             return;
         }
-
         if (isEqualCard(OpenCard.GetThisCardDetail(), card.GetThisCardDetail()))
             MatchFound(OpenCard, card);
         else
@@ -32,7 +32,6 @@ public class CardManager : MonoBehaviour
     }
 
 
-    public bool isEqualCard(CardDetail First, CardDetail Sec) => First.type.Equals(Sec.type) && First.no == Sec.no;
 
     public void MatchFound(Card First, Card Sec)
     {
@@ -56,16 +55,12 @@ public class CardManager : MonoBehaviour
 
     public void SaveData()
     {
-        var data = new SaveData();
-        data.raw = Gamemanager.instance.gridManager.GetRaw();
-        data.col = Gamemanager.instance.gridManager.GetCol();
-        data.score = Gamemanager.instance.scoreManager.score;
+        var cardlist = new System.Collections.Generic.List<savecardDetail>();
         for (int i = 0; i < cards.Count; i++)
         {
-            data.cards.Add(cards[i].GetCardData());
+            cardlist.Add(cards[i].GetCardData());
         }
-        Gamemanager.instance.saveGame.Save(data);
-
+        Gamemanager.instance.saveGame.Save(new SaveData(Gamemanager.instance.gridManager.GetRaw(), Gamemanager.instance.gridManager.GetCol(), Gamemanager.instance.scoreManager.score, cardlist));
     }
 
 
@@ -73,7 +68,6 @@ public class CardManager : MonoBehaviour
     {
         var isover = true;
         foreach (var card in cards) if (!card.GetIsCardHide()) isover = false;
-
         if (!isover) return;
         ResetAllCard();
     }
@@ -86,51 +80,29 @@ public class CardManager : MonoBehaviour
         PlayerPrefs.DeleteAll();
         Gamemanager.instance.uiManager.OnGameOver();
     }
-
-
-
-
     public CardDetail GetCardDetail(string type, int no)
     {
-        cardType cardType = converToEnum<cardType>(type);
+        var cardType = converToEnum<cardType>(type);
         return AllCardsDetail.Find((x) => x.type == cardType && x.no == no);
     }
-
-
-    public cardType converToEnum<cardType>(string enumValue)
-    {
-        return (cardType)Enum.Parse(typeof(cardType), enumValue);
-    }
-
-
     public void SetCardData()
     {
         SelectedCards.Clear();
 
         if (cards.Count % 2 != 0) return;
         int count = cards.Count / 2;
-
         for (int i = 0; i < count; i++)
         {
             var card = AllCardsDetail[UnityEngine.Random.Range(0, AllCardsDetail.Count)];
-
-            if (SelectedCards.Find((x) => x == card) != null)
-            {
-                i--;
-            }
-            else
-            {
-                SelectedCards.Add(card);
-            }
+            if (SelectedCards.Find((x) => x == card) != null) i--;
+            else SelectedCards.Add(card);
         }
         SetCardDataTolist(cards.ToArray());
-
     }
 
     public void SetCardDataTolist(Card[] allcards)
     {
         var list = allcards.ToList<Card>();
-
         foreach (var selectedcard in SelectedCards)
         {
             for (int i = 0; i < 2; i++)
@@ -143,8 +115,6 @@ public class CardManager : MonoBehaviour
         SaveData();
         CheckgameOver();
     }
-
-
 }
 
 [System.Serializable]

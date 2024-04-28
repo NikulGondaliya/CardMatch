@@ -5,16 +5,15 @@ using UnityEngine;
 
 public class Card : MonoBehaviour
 {
-    public Sprite backSprite;
-    public Sprite frontSprite;
-
+    private Sprite backSprite;
+    private Sprite frontSprite;
     private UnityEngine.UI.Image Image;
     private float cardfliptime = .5f;
     private bool isOpen = false;
     private bool IsHide = false;
     private bool isClick = false;
     private CardDetail cardDetail;
-    private Transform transform;
+    [HideInInspector] public Transform transform;
     private CanvasGroup CanvasGroup;
     private void Awake()
     {
@@ -26,7 +25,6 @@ public class Card : MonoBehaviour
 
     public bool GetIsCardHide() => IsHide;
     public bool GetIsCardOpen() => isOpen;
-
     public CardDetail GetThisCardDetail() => cardDetail;
 
 
@@ -35,20 +33,10 @@ public class Card : MonoBehaviour
         this.cardDetail = cardDetail;
         frontSprite = cardDetail.cardsprite;
     }
-
-
     public savecardDetail GetCardData()
     {
-        Debug.Log("Before .......... type " + cardDetail.type + " no  " + cardDetail.no);
-        savecardDetail details = new savecardDetail();
-        details.type = Enum.GetName(typeof(cardType), cardDetail.type);
-        details.no = cardDetail.no;
-        details.isopen = isOpen;
-        details.ishide = IsHide;
-        Debug.Log("after .......... type " + details.type + " no  " + details.no);
-        return details;
+        return new savecardDetail(Enum.GetName(typeof(cardType), cardDetail.type), cardDetail.no, isOpen, IsHide);
     }
-
 
     public void SetWholeCard(savecardDetail card)
     {
@@ -61,8 +49,11 @@ public class Card : MonoBehaviour
     }
 
 
-    private void Start() => Image.sprite = backSprite;
-
+    private void Start()
+    {
+        backSprite = Gamemanager.instance.cardManager.GetBackgroundSprite();
+        Image.sprite = backSprite;
+    }
 
     public void OnClick()
     {
@@ -97,16 +88,10 @@ public class Card : MonoBehaviour
         Gamemanager.instance.cardManager.CompareCard(this);
     }
 
-    public void CloseCard()
-    {
-        isOpen = false;
-        StartCoroutine(CloseThisCard());
-    }
-
-
+    public void CloseCard() => StartCoroutine(CloseThisCard());
     private IEnumerator CloseThisCard()
     {
-
+        isOpen = false;
         float timer = 0f;
         while (timer < cardfliptime)
         {
@@ -139,12 +124,12 @@ public class Card : MonoBehaviour
     }
     private IEnumerator RemoveCard()
     {
-        var c = cardfliptime / 2;
+        var time = cardfliptime / 2;
         float timer = 0f;
-        while (timer < c)
+        while (timer < time)
         {
             timer += Time.deltaTime;
-            float alpha = Mathf.Lerp(1f, 0f, timer / c);
+            float alpha = Mathf.Lerp(1f, 0f, timer / time);
             CanvasGroup.alpha = alpha;
             yield return null;
         }

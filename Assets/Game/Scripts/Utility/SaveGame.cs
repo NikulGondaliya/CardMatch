@@ -4,12 +4,10 @@ using System.Diagnostics;
 
 public class SaveGame : UnityEngine.MonoBehaviour
 {
-    string path = "Assets/Resources/Data.txt";
+    private readonly string path = "Assets/Resources/Data.txt";
 
-    public bool isLastDataAvailable()
-    {
-        return UnityEngine.PlayerPrefs.HasKey("LastData");
-    }
+    public bool isLastDataAvailable() => UnityEngine.PlayerPrefs.HasKey("LastData");
+    
 
     public SaveData GetData()
     {
@@ -40,7 +38,14 @@ public class SaveData
     public int col;
     public int score;
     public System.Collections.Generic.List<savecardDetail> cards = new System.Collections.Generic.List<savecardDetail>();
-
+    public SaveData() { }
+    public SaveData(int raw, int col, int score , System.Collections.Generic.List<savecardDetail> cards)
+    {
+        this.raw = raw;
+        this.col = col;
+        this.score = score;
+        this.cards = cards;
+    }
 }
 
 [System.Serializable]
@@ -50,7 +55,14 @@ public class savecardDetail
     public int no;
     public bool isopen;
     public bool ishide;
-
+    public savecardDetail() { }
+    public savecardDetail(string cardtype,int cardNo,bool isCardopen,bool iscardHide)
+    {
+        type = cardtype;
+        no = cardNo;
+        isopen = isCardopen;
+        ishide = iscardHide;
+    }
 }
 
 
